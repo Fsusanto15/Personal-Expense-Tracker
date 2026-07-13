@@ -14,8 +14,7 @@ struct Personal_Expennse_TrackerApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
-                .environment(\.managedObjectContext, persistenceController.container.viewContext)
+            ExpenseListView(repository: FileExpenseRepository())
         }
     }
 }

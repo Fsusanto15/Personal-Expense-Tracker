@@ -6,7 +6,28 @@
 //
 
 import Testing
+import XCTest
 @testable import Personal_Expennse_Tracker
+
+final class FileExpenseRepositoryTests: XCTestCase {
+    func test_saveThenLoad_returnsSameExpenses() throws {
+        let repository = FileExpenseRepository(fileName: "test_expenses.json")
+        let expenses = [
+            Expense(title: "Coffee", amount: 4.5, date: .now)
+        ]
+
+        try repository.save(expenses)
+        let loaded = try repository.load()
+
+        XCTAssertEqual(loaded, expenses)
+    }
+
+    func test_load_whenNoFileExists_returnsEmptyArray() throws {
+        let repository = FileExpenseRepository(fileName: "nonexistent_\(UUID()).json")
+        let loaded = try repository.load()
+        XCTAssertEqual(loaded, [])
+    }
+}
 
 struct Personal_Expennse_TrackerTests {
 
